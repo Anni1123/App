@@ -18,21 +18,24 @@ public class MainActivity extends AppCompatActivity {
 
     private ListView mlistView;
 
+    FirebaseListAdapter<String> firebaseListAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         mlistView = (ListView) findViewById(R.id.list_item);
 
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance().getReferenceFromUrl("https://appfirebaseproject-f60c2.firebaseio.com/");
-        Query query = databaseReference.limitToLast(50).orderByKey();
+        DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReferenceFromUrl("https://appfirebaseproject-f60c2.firebaseio.com/Users");
+        Query query = databaseReference
+                .limitToLast(50)
+                .orderByKey();
 
         FirebaseListOptions<String> options =
                 new FirebaseListOptions.Builder<String>()
                         .setLayout(android.R.layout.simple_list_item_1)
                         .setQuery(query, String.class)
                         .build();
-        FirebaseListAdapter<String> firebaseListAdapter = new FirebaseListAdapter<String>(options) {
+        firebaseListAdapter= new FirebaseListAdapter<String>(options) {
             @Override
             protected void populateView(@NonNull View v, @NonNull String model, int position) {
                 TextView textView = (TextView) v.findViewById(android.R.id.text1);
@@ -40,5 +43,11 @@ public class MainActivity extends AppCompatActivity {
             }
         };
         mlistView.setAdapter(firebaseListAdapter);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        firebaseListAdapter.startListening();
     }
 }

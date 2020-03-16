@@ -10,7 +10,7 @@ public class App extends Application {
     public void onCreate() {
         super.onCreate();
 
-        //   Firebase.setAndroidContext(this);
+
 
         if(!FirebaseApp.getApps(this).isEmpty()){
             FirebaseDatabase.getInstance().setPersistenceEnabled(true);
