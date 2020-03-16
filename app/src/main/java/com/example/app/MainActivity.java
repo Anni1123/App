@@ -16,14 +16,14 @@ import com.google.firebase.database.Query;
 
 public class MainActivity extends AppCompatActivity {
 
-    private ListView mlistView;
+    private ListView listView;
 
     FirebaseListAdapter<String> firebaseListAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mlistView = (ListView) findViewById(R.id.list_item);
+        listView = (ListView) findViewById(R.id.list_item);
 
         DatabaseReference databaseReference= FirebaseDatabase.getInstance().getReferenceFromUrl("https://appfirebaseproject-f60c2.firebaseio.com/Users");
         Query query = databaseReference
@@ -42,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
                 textView.setText(model);
             }
         };
-        mlistView.setAdapter(firebaseListAdapter);
+        listView.setAdapter(firebaseListAdapter);
     }
 
     @Override
